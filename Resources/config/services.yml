@@ -1,0 +1,6 @@
+services:
+   Aldaflux\AldafluxOvhBundle\DataCollector\OvhCollector:
+        tags:
+            -
+                name:     data_collector
+                id:       'aldaflux.ovh_collector'
