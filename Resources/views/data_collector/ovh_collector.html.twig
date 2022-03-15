@@ -1,0 +1,100 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        
+        
+        
+        {%  if collector.nbLogs  %}
+            {%  if collector.nbErrorLogs  %}
+                {% set color_icon = "#ff0000" %}
+            {%  else %}
+                {% set color_icon = "#00ff00" %}
+            {%  endif %}
+        {%  else %}
+            {% set color_icon = "#555555" %}
+            {% set color_icon = "#113F6D" %}
+        {%  endif %}
+        {% include('@AldafluxOvh/data_collector/icon/ovh.svg.twig') %}
+        <span class="sf-toolbar-value">Ovh</span>
+    {% endset %}
+
+    {% set text %}
+        {# this is the content displayed when hovering the mouse over  the toolbar panel #}
+         
+        
+        <div class="sf-toolbar-info-piece">
+            <b>Calls</b>
+            <span class='sf-toolbar-status {% if collector.nbErrorLogs  %}sf-toolbar-status-green{% endif %}'>{{ collector.nbLogs }}</span>
+        </div>
+        
+        <div class="sf-toolbar-info-piece">
+            <b>Error Calls</b>
+            <span class='sf-toolbar-status {% if collector.nbErrorLogs  %}sf-toolbar-status-red{% endif %}'>{{ collector.nbErrorLogs }}</span>
+        </div>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig') }}
+    
+    
+    
+{% endblock %}
+
+{% block menu %}
+
+   
+    <span class="label ">
+        <span class="icon">
+        {% include('@AldafluxOvh/data_collector/icon/ovh.svg') %}
+        </span>
+        <strong> OvhCollector </strong>
+            <span class="count">
+                <span>OK</span>
+            </span>
+    </span>
+{% endblock %}
+
+
+
+
+{% block panel %}
+    <style>
+        h1.error
+        {
+            background-color: rgb(176, 65, 62);
+            color: white;
+        }
+    </style>
+    
+    <h2> OvhCollector </h2>
+
+
+    {%  if collector.nbLogs  %}
+        <table> 
+        {%  for log in collector.logs  %}
+            
+            <tr class='{%  if log.error is defined  %}status-error{%  else %}status-success{%  endif %}'>
+                <td>{{ log.params }}</td>
+                {%  if log.error is defined  %}
+                    <td>{{ dump(log.error) }}</td>
+                {%  else %}
+                    <td>{{ dump(log.result) }}</td>
+                {%  endif %}
+                    
+            </tr>
+        {%  endfor %}
+        </table> 
+    {%  else %}
+        <div class="empty">
+               <p>There are no logs .</p>
+       </div>
+    {%  endif %}
+
+    {%  if collector.nbErrorLogs  %}
+    {%  endif %}
+
+    
+       
+                   
+</div>
+{% endblock %}
