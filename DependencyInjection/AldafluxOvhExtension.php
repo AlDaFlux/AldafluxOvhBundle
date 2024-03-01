@@ -19,8 +19,16 @@ class AldafluxOvhExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         
-        $container->setParameter( 'ovh_credentials', $config[ 'credentials' ] );
-        $container->setParameter( 'ovh_default', $config[ 'default' ] );
+        if (isset($config['credentials']))
+        {
+            $container->setParameter( 'ovh_credentials', $config[ 'credentials'] );
+        }
+        
+        if (isset($config['default']))
+        {
+            $container->setParameter( 'ovh_default', $config['default'] );
+        }
+        
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
