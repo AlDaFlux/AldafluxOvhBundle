@@ -1,0 +1,25 @@
+services:
+   Aldaflux\AldafluxOvhBundle\DataCollector\OvhCollector:
+        arguments: ["@aldaflux.ovh.service"]
+        tags:
+            -
+                name:     data_collector
+                id:       'aldaflux.ovh_collector'
+   Aldaflux\AldafluxOvhBundle\Service\OvhService:
+        arguments: ["@parameter_bag"]
+   aldaflux.ovh.service:
+        alias: Aldaflux\AldafluxOvhBundle\Service\OvhService
+        public: true        
+   Aldaflux\AldafluxOvhBundle\Command\OvhCreateRedirectionCommand:
+        arguments: ["@parameter_bag"]
+        tags:
+            -
+                name:     console.command
+                id:       'ovh:domaine:zone:redirection:create'
+   Aldaflux\AldafluxOvhBundle\Command\OvhListRedirectionCommand:
+        arguments: ["@parameter_bag"]
+        tags:
+            -
+                name:     console.command
+                id:       'ovh:domaine:zone:redirection:create'
+    
