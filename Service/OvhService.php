@@ -38,13 +38,27 @@ class OvhService
         $this->logs = array();
         
         $this->parameters = $parameterBag;
+
+        $ovhDefault = $this->parameters->Get("ovh_default") ?? [];
+        $this->ipDefault = $ovhDefault["ip"] ?? null;
+        $this->domainDefault = $ovhDefault["domain"] ?? null;
+
+
+        $ovhCredentials = $this->parameters->Get("ovh_credentials") ?? [];
         
-        $this->ipDefault = $this->parameters->Get("ovh_default")["ip"];
-        $this->domainDefault= $this->parameters->Get("ovh_default")["domain"];
-        $this->ovhApi = new Api( $this->parameters->Get("ovh_credentials")["application_key"],  // Application Key
-        $this->parameters->Get("ovh_credentials")["application_secret"],  // Application Secret
-        $this->parameters->Get("ovh_credentials")["endpoint_name"],      // Endpoint of API OVH Europe (List of available endpoints)
-        $this->parameters->Get("ovh_credentials")["consumer_key"]); // Consumer Key
+        $requiredKeys = ["application_key", "application_secret", "endpoint_name", "consumer_key"];
+        $missingKeys = array_diff($requiredKeys, array_keys(array_filter($ovhCredentials)));
+
+                
+        if (empty($missingKeys)) {
+            $this->ovhApi = new Api(
+                $ovhCredentials["application_key"],
+                $ovhCredentials["application_secret"],
+                $ovhCredentials["endpoint_name"],
+                $ovhCredentials["consumer_key"]
+            );
+        }
+      
     } 
     
     
