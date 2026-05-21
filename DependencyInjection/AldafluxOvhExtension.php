@@ -26,7 +26,7 @@ class AldafluxOvhExtension extends Extension
         }
         else
         {
-            $container->setParameter( 'ovh_credentials', "PUT_OVH_CREDENTIAL" );
+            $container->setParameter( 'ovh_credentials', ['application_key' => null, 'application_secret' => null, 'endpoint_name' => 'ovh-eu', 'consumer_key' => null] );
             
         }
         
@@ -36,7 +36,7 @@ class AldafluxOvhExtension extends Extension
         }
         else
         {
-            $container->setParameter( 'ovh_default', 'default' );
+            $container->setParameter( 'ovh_default', ['ip' => null, 'domain' => null] );
             
         }
         
