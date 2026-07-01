@@ -10,7 +10,7 @@
  "prefer-stable":true,
  "require": {
        "symfony/framework-bundle": ">=7.1",
-       "ovh/ovh": "^2.0"
+       "ovh/ovh": "^3.5"
   },
     "autoload": {
         "psr-4": {
